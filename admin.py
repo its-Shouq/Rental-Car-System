@@ -51,5 +51,4 @@ adm1 = Admin("Wasan" , "wsn41" , "xxxx@gmail.com" , "12345")
 
 adm1.add("Toyota" , 2025 , 120 , 3)
 
-
 print(cars_available)
