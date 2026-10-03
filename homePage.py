@@ -1,6 +1,6 @@
 import streamlit as st
 
-cars = [ #a list of dictionaries representing cars that are avaible for renting
+available_cars = [ #a list of dictionaries representing cars that are avaible for renting
     {"id":1, "model":"Toyota Camry Se","year":2022,"color":"White", "price":60.50,"quantity":3},
     {"id":2, "model":"Honda Accord Hybrid","year":2020,"color":"Black" ,"price":80.75,"quantity":2},
     {"id":3, "model":"Hyundai Elantra","year":2023,"color":"Silver","price":60.75,"quantity":4},
@@ -12,6 +12,7 @@ cars = [ #a list of dictionaries representing cars that are avaible for renting
     {"id":9, "model":"Mazda CX-5", "year":2023, "color":"Black", "price":150.00,"quantity":3},
     {"id":10,"model":"GMC Yukon","year":2020, "color":"White","price":150.00,"quantity":2}
 ]
+rented_cars = [] #store rented cars
 
 class Cars:  #temporary class to manage the car catalog until adding the user
     def __init__(self,cars): # constructor to initialize the class 
@@ -67,7 +68,7 @@ class Cars:  #temporary class to manage the car catalog until adding the user
 
 
 st.set_page_config(page_title="Car Rental System", layout="wide") #placeholder for now 
-catalog = Cars(cars) #shows the catalog of cars available for renting 
+catalog = Cars(available_cars) #shows the catalog of cars available for renting 
 st.title("Car Rental System") #title of the page, will be changed 
 
 #st.write("Pick store location:")

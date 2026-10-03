@@ -15,7 +15,7 @@ Original file is located at
 #     self.email = email
 
 
-class Rental(Person):
+class Customer(Person):
   def __init__(self,name,age,email,username,password, license,cart):
     super().__init__(name,age,email,username,password,license)
     self.cart = []
@@ -66,12 +66,12 @@ class Rental(Person):
     for available_car in available_cars:
       if available_car["id"] == car["id"]:
         available_car["quantity"] -= 1
+        rented_cars.append(car)
 
         #if no cars are left
         if available_car["quantity"] ==0:
           available_cars.remove(available_car)
-          unavailable_cars.append(car)
-
+          
         break
 
     self.receipt(total)
@@ -79,39 +79,20 @@ class Rental(Person):
     self.cart.clear()
 
 
-  #def receipt(self):
+  def receipt(self,total):
+    car = self.cart[0]
+    return f"Thank you!\n your receipt information: \n car model: {car['model']} \n Year: {car['year']} \n Color: {car['color']} \n Rented days: {car['days']} \n Total price: {total}"
 
-available_cars = [
-    {
-        "id": 1,
-        "brand": "Toyota",
-        "model": "Camry",
-        "color": "White",
-        "quantity": 5,
-        "price": 150
-    },
-    {
-        "id": 2,
-        "brand": "Honda",
-        "model": "Accord",
-        "color": "Black",
-        "quantity": 3,
-        "price": 180
-    }
-]
+# renter1 = Customer(
+#     "aleen123",
+#     "1234",
+#     "Aleen",
+#     "aleen@email.com",
+#     22,
+#     "123456789"
+# )
 
-unavailable_cars = []
+# renter1.add_to_cart(available_cars[0], 3)
 
-renter1 = Rental(
-    "aleen123",
-    "1234",
-    "Aleen",
-    "aleen@email.com",
-    22,
-    "123456789"
-)
-
-renter1.add_to_cart(available_cars[0], 3)
-
-print(renter1.cart)
+# print(renter1.cart)
 
