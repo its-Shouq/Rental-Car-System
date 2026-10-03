@@ -22,16 +22,20 @@ Original file is located at
 
 
 class Admin: #(Person):
-
+    
+    #Define Admin class attributes.
   def __init__(self ,name,age,email,username,password,license):
     super().__init__(name,age,email,username,password,license)
 
+    #Enables the admin to add new cars to the system to be rented. 
   def add(self ,id, model , year , price, color , quantity ):
     for car in cars_available:
       if car['model'] == model and car['year'] == year and car['color'] == color:
        return "already exists" 
     cars_available.append({'id':id , 'model': model , 'year' : year , 'price' : price ,'color': color, 'quantity' : quantity})
 
+
+    #Enables the admin to delete unwanted cars from the system premenantly.
   def delete(self , id):
     if id not in [car['id'] for car in cars_available]: 
       print("This car is already deleted or rented.")
@@ -39,7 +43,9 @@ class Admin: #(Person):
       for car in cars_available : 
         if car["id"] == id : 
           cars_available.remove(car)
+            
 
+    #Enables the admin to modify the quantity of an existing car. 
   def modify_quantity(self , model , quantity ):
     if id not in [car['id'] for car in cars_available]:
       print("This car is already deleted or rented.")
@@ -48,6 +54,8 @@ class Admin: #(Person):
         if car['id'] == id:
           car['quantity'] = quantity
 
+    
+    #Enables the admin to modify the price of an existing car. 
   def modify_price(self , id , price):
     if id not in [car['id'] for car in cars_available]:
       print("This car is already deleted or rented.")
@@ -58,12 +66,11 @@ class Admin: #(Person):
 
 
 
-
+# Test for the admin class:
 cars_available = [ {'id': 1 ,'model' : 'BMW' ,  'year' : 2026 , 'price' : 300 , 'quantity' : 2}]
 
 adm1 = Admin("Wasan" , "wsn41" , "xxxx@gmail.com" , "12345")
 
 adm1.add("Toyota" , 2025 , 120 , 3)
-
 
 print(cars_available)
