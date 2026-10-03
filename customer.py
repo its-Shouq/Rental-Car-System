@@ -7,19 +7,17 @@ Original file is located at
     https://colab.research.google.com/drive/1SLRGjk87sYwlQUNOw_XYQoNgvXmqvVnC
 """
 
-class Person:
-  def __init__(self, username, password, name, email):
-    self.username = username
-    self.password = password
-    self.name = name
-    self.email = email
+# class Person:
+#   def __init__(self, username, password, name, email):
+#     self.username = username
+#     self.password = password
+#     self.name = name
+#     self.email = email
 
 
 class Rental(Person):
-  def __init__(self, username, password, name, email, age, license):
-    super().__init__(username, password, name, email)
-    self.age = age
-    self.license = license
+  def __init__(self,name,age,email,username,password, license,cart):
+    super().__init__(name,age,email,username,password,license)
     self.cart = []
 
 

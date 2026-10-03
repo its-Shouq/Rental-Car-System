@@ -7,57 +7,59 @@ Original file is located at
     https://colab.research.google.com/drive/1mxaAE9q7ZdzIIgrJvemPCtrXUgMVOjt1
 """
 
-class Person:
-  def __init__(self , name , username , email , password):
-    self.name = name
-    self.username = username
-    self.email = email
-    self.__password = password
+# class Person:
+#   def __init__(self , name , username , email , password):
+#     self.name = name
+#     self.username = username
+#     self.email = email
+#     self.__password = password
 
-  def login(self):
-    pass
+#   def login(self):
+#     pass
 
-  def display(self):
-    print(f"Welcome {self.name} to the Rental Car System!")
+  # def display(self):
+  #   print(f"Welcome {self.name} to the Rental Car System!")
 
 
-class Admin(Person):
+class Admin: #(Person):
 
-  def __init__(self , name , username , email , password):
-    super().__init__(name , username , email , password)
+  def __init__(self ,name,age,email,username,password,license):
+    super().__init__(name,age,email,username,password,license)
 
-  def add(self , model , year , price , quantity ):
-    if model not in [car['model'] for car in cars_available]:
-      cars_available.append({'model': model , 'year' : year , 'price' : price , 'quantity' : quantity})
+  def add(self ,id, model , year , price, color , quantity ):
+    for car in cars_available:
+      if car['model'] == model and car['year'] == year and car['color'] == color:
+       return "already exists" 
+    cars_available.append({'id':id , 'model': model , 'year' : year , 'price' : price ,'color': color, 'quantity' : quantity})
 
-  def delete(self , model):
-    if model not in [car['model'] for car in cars_available]:
+  def delete(self , id):
+    if id not in [car['id'] for car in cars_available]: 
       print("This car is already deleted or rented.")
-    else:
-      cars_available.remove(
-          [car for car in cars_available if car['model'] == model]
-      )
+    else: 
+      for car in cars_available : 
+        if car["id"] == id : 
+          cars_available.remove(car)
 
   def modify_quantity(self , model , quantity ):
-    if model not in [car['model'] for car in cars_available]:
+    if id not in [car['id'] for car in cars_available]:
       print("This car is already deleted or rented.")
     else:
       for car in cars_available:
-        if car['model'] == model:
-          car['quantity'] == quantity
+        if car['id'] == id:
+          car['quantity'] = quantity
 
-  def modify_price(self , model , price):
-    if model not in [car['model'] for car in cars_available]:
+  def modify_price(self , id , price):
+    if id not in [car['id'] for car in cars_available]:
       print("This car is already deleted or rented.")
     else:
       for car in cars_available:
-        if car['model'] == model:
-          car['price'] == price
+        if car['id'] == id:
+          car['price'] = price
 
 
 
 
-cars_available = [ {'model' : 'BMW' ,  'year' : 2026 , 'price' : 300 , 'quantity' : 2}]
+cars_available = [ {'id': 1 ,'model' : 'BMW' ,  'year' : 2026 , 'price' : 300 , 'quantity' : 2}]
 
 adm1 = Admin("Wasan" , "wsn41" , "xxxx@gmail.com" , "12345")
 
