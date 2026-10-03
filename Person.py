@@ -18,7 +18,7 @@ def login(username,password):
 # sort method that sort cars prices
 sorted_cars = sorted(available_cars,key = lambda available_cars: available_cars['price'])
 
-# a method tp filter the cars by model or price or color 
+# a method that filter the cars by model or price or color 
 def filter_by(model,price,color):
    filtered_values=[]
    for i in available_cars:
