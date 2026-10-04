@@ -27,13 +27,13 @@ def login(username,password):
 #super class
 class Person:
     #initiete attributes
-    def __init__(self,name,age,email,username,password,license):
+    def __init__(self,name,age,email,username,password):
         self.name = name
         self.age= age
         self.email=email
         self.__password=password
         self.username=username
-        self.license = license
+        
 
     #method that display cars information 
     def display_car_info(self):
@@ -56,8 +56,8 @@ class Person:
 #Admin class
 class Admin(Person):
 #Define Admin class attributes.
-  def __init__(self ,name,age,email,username,password,license):
-    super().__init__(name,age,email,username,password,license)
+  def __init__(self ,name,age,email,username,password):
+    super().__init__(name,age,email,username,password)
 
 #Enables the admin to add new cars to the system to be rented.
   def add(self ,id, model , year , price, color , quantity ):
@@ -97,8 +97,9 @@ class Admin(Person):
 #Customer class(add commints)
 class Customer(Person):
   def __init__(self,name,age,email,username,password, license,cart):
-    super().__init__(name,age,email,username,password,license)
+    super().__init__(name,age,email,username,password)
     self.cart = []
+    self.license = license
 
 
   def add_to_cart(self, car, days):
