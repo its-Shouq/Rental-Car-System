@@ -81,7 +81,7 @@ div[data-baseweb="tab-highlight"] { background:var(--ink) !important; height:3px
 
 EXTRA_CSS = """
 /* ---- layout pieces added for the multi-page version ---- */
-.block-container { max-width:1180px; }
+.block-container { max-width:1500px; padding-left:7rem; padding-right:7rem; }
 .brand-panel { background:var(--asphalt); border-radius:14px; min-height:640px; display:flex; flex-direction:column;
   justify-content:space-between; overflow:hidden; }
 .brand-panel .inner { padding:2.2rem 2.4rem 0 2.4rem; }
@@ -103,8 +103,8 @@ EXTRA_CSS = """
 .st-key-topbar .pill { margin:0 .7rem 0 0; font-size:.75rem; }
 
 /* search bar + tables */
-.st-key-searchbar { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:.4rem .6rem; }
-.daytag { background:var(--signal); border:1.5px solid var(--ink); border-radius:8px; padding:.62rem 1rem; font-weight:600; text-align:center; white-space:nowrap; }
+.st-key-searchbar { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:.4rem .6rem; }.st-key-searchbar { background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:.4rem 1.6rem 1rem 1.6rem; }
+.daytag { background:var(--signal); border:1.5px solid var(--ink); border-radius:8px; height:2.6rem; display:flex; align-items:center; justify-content:center; font-weight:600; white-space:nowrap; margin-bottom:1rem; }
 .count { color:var(--muted); text-align:right; padding-top:1.6rem; }
 .st-key-fleet_table { background:var(--paper); border:1px solid var(--line); border-radius:12px; overflow:hidden; gap:0; }
 [class*="st-key-row_"] { border-bottom:1px solid var(--line); padding:.35rem 1.2rem; }
@@ -127,6 +127,27 @@ EXTRA_CSS = """
 .car-foot { display:flex; justify-content:space-between; align-items:center; gap:1rem; }
 .car-meta { display:flex; flex-direction:column; gap:.3rem; }
 .car-meta .chip { margin-right:0; }
+
+/* labels inside the search bar (Pick-up dates, Search) */
+.st-key-searchbar [data-testid="stWidgetLabel"] p {
+    color: #5E6A72 !important;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding-left: 0.3rem;
+}
+
+/* borders on the input boxes (date, search, dropdowns) */
+[data-baseweb="input"],
+[data-baseweb="select"] > div {
+    border: 1.5px solid #5E6A72 !important;
+    border-radius: 8px !important;
+}
+/* darker border when the box is clicked */
+[data-baseweb="input"]:focus-within,
+[data-baseweb="select"] > div:focus-within {
+    border-color: #151A1D !important;
+}
+.vline { width:1px; height:2.5rem; background:#D5DBDF; margin:0 auto 15px auto; }
 """
 
 

@@ -15,7 +15,7 @@ import streamlit as st
 #   goto       -> changes the current page
 #   inject_css -> adds our colors, cards and fonts to the page
 from theme import goto, inject_css
-from views import fleet, welcome
+from views import fleet_filters, welcome
 
 # Page settings: browser tab title, tab icon, and full-width layout.
 # This must be the FIRST Streamlit command that runs in the file.
@@ -44,7 +44,7 @@ def coming_soon(user=None):
 # not running it yet.
 PAGES = {
     "welcome": welcome.render,
-    "fleet": fleet.render,
+    "fleet": fleet_filters.render,
     # next steps: "customer_auth", "admin_login", "customer_home", "admin_home"
 }
 
