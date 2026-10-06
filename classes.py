@@ -1,3 +1,4 @@
+from datetime import datetime
 #First part of the code 
 # list of dictionaries that contains cars informations , id represents the car category
 available_cars = [ 
@@ -29,6 +30,11 @@ def rental_days(pickup, ret):
     if days < 1:
         days = 1
     return days
+
+# calculate the total rental price based on the car's price and the number of rental days
+def rental_total(price, days):
+    return price * days
+
 
 #Second part of the code
 #super class
@@ -108,69 +114,70 @@ class Customer(Person):
     self.cart = []
     self.license = license
 
-
-  def add_to_cart(self, car, days):
-
+# method to add a car to the cart, with a limit of one car at a time
+  def add_to_cart(self, car, pickup, ret):
     if len(self.cart) >= 1:
-      print("You can only rent one car.")
-      return
+      return False, "You can only rent one car at a time."
 
     rental = car.copy()
-    rental["days"] = days
-
+    rental["pickup"] = pickup
+    rental["ret"] = ret
+    rental["days"] = rental_days(pickup, ret)
     self.cart.append(rental)
+    return True, "Car added to your booking."
 
-    print("Car added to cart")
 
-
-  def modify_cart(self, days):
-
+# method to modify the rental dates of the car in the cart
+  def modify_cart(self, pickup, ret):
     if not self.cart:
-      print("Cart is empty.")
-      return
+      return False, "Your booking is empty."
 
-    self.cart[0]["days"] = days
-
-    print("Cart updated")
+    self.cart[0]["pickup"] = pickup
+    self.cart[0]["ret"] = ret
+    self.cart[0]["days"] = rental_days(pickup, ret)
+    return True, "Rental dates updated."
 
 
   def delete_from_cart(self):
-
     self.cart.clear()
-
-    print("Car removed from cart.")
+    return True, "Car removed from your booking."
 
 
   def checkout(self):
-
     if not self.cart:
-      print("Cart is empty.")
-      return
-
+      return None
+ 
     car = self.cart[0]
-
-    total = car["price"] * car["days"]
-
+    total = rental_total(car["price"], car["days"])
+ 
+    # the receipt: the interface shows it, and the admin sees it in rented_cars
+    receipt = {"ref": "RN-" + datetime.now().strftime("%y%m%d%H%M%S"),
+               "issued": datetime.now(),
+               "name": self.name,
+               "username": self.username,
+               "car_id": car["id"],
+               "car": car["model"],
+               "color": car["color"],
+               "pickup": car["pickup"],
+               "ret": car["ret"],
+               "days": car["days"],
+               "rate": car["price"],
+               "total": total}
+ 
     for available_car in available_cars:
       if available_car["id"] == car["id"]:
         available_car["quantity"] -= 1
-        rented_cars.append(car)
-
+ 
         #if no cars are left
-        if available_car["quantity"] ==0:
+        if available_car["quantity"] == 0:
           available_cars.remove(available_car)
-          
+ 
         break
-
-    self.receipt(total)
-    
-
+ 
+    rented_cars.append(receipt)
     self.cart.clear()
+    return receipt
 
-
-  def receipt(self,total):
-    car = self.cart[0]
-    return f"Thank you!\n your receipt information: \n car model: {car['model']} \n Year: {car['year']} \n Color: {car['color']} \n Rented days: {car['days']} \n Total price: {total}"
 
 #independent class that contains car's methods to manage the car
 class Cars:  
