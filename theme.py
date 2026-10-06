@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 """Look and feel: colors, CSS, car card, brand panel, top bar, navigation helpers."""
 import streamlit as st
+import base64
+import os
+
+# Folder of the car photos. "" means the same folder as app.py (like in your old code: 1.jpg, 2.jpg ...)
+IMAGE_FOLDER = ""
+
+# Photos we already read (so we do not read the same file again on every click)
+photo_cache = {}
+
 
 COLOR_HEX = {
     "White": "#F6F7F8", "Black": "#22282D", "Silver": "#B9C1C7",
@@ -148,6 +157,34 @@ EXTRA_CSS = """
     border-color: #151A1D !important;
 }
 .vline { width:1px; height:2.5rem; background:#D5DBDF; margin:0 auto 15px auto; }
+
+/* borders on the input boxes (date, search, dropdowns) */
+[data-baseweb="input"],
+[data-baseweb="select"] > div {
+    border: 1.5px solid #D5DBDF !important;
+    border-radius: 8px !important;
+}
+
+/* customer navbar */
+/* customer navbar: full width, from the left edge to the right edge */
+.st-key-navbar { background:var(--asphalt); border-radius:0; padding:.6rem 3rem; margin-bottom:1.2rem;
+                 width:100vw !important; max-width:100vw !important; margin-left:calc(50% - 50vw); }
+.st-key-navbar .logo { font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:1.9rem; color:var(--signal); }
+.st-key-navbar .topname { color:#fff; text-align:right; font-weight:500; margin-bottom:14px; }
+.st-key-navbar button[kind="tertiary"] { color:#9AA6AE !important; background:transparent !important; border:none !important; }
+.st-key-navbar button[kind="tertiary"]:hover { color:#fff !important; background:transparent !important; }
+.st-key-navbar button[kind="primary"] { background:transparent !important; color:#fff !important; border:none !important; border-bottom:3px solid var(--signal) !important; border-radius:0 !important; }
+
+/* remove the empty space above the navbar and the sideways scrollbar */
+.block-container { padding-top:0 !important; }
+.stApp { overflow-x:hidden; }
+
+/* car photos */
+.car-photo { width:100%; height:240px; object-fit:cover; display:block; transform:scale(1); }
+.car-art:has(.car-photo) { padding:0; overflow:hidden; background:#fff; }
+
+/* bold text on buttons */
+.stButton button p { font-weight:600; }
 """
 
 
@@ -204,12 +241,30 @@ def car_svg(color):
       <circle cx="186" cy="74" r="15" fill="#151A1D"/><circle cx="186" cy="74" r="6" fill="#B9C1C7"/>
     </svg>"""
 
+def car_photo_html(car):
+    """Return the car photo (named like the car id, for example 1.jpg).
+    If the car has no photo, return the car drawing instead."""
+    path = os.path.join(IMAGE_FOLDER, str(car["id"]) + ".jpg")
+
+    if path in photo_cache:
+        return photo_cache[path]
+
+    if not os.path.exists(path):
+        return car_svg(car["color"])
+
+    file = open(path, "rb")
+    data = base64.b64encode(file.read()).decode()
+    file.close()
+
+    html = '<img class="car-photo" src="data:image/jpeg;base64,' + data + '">'
+    photo_cache[path] = html
+    return html
 
 def car_card_html(car):
     dot = COLOR_HEX.get(car["color"], "#8A949B")
     return f"""
     <div class="car-card">
-      <div class="car-art">{car_svg(car['color'])}</div>
+        <div class="car-art">{car_photo_html(car)}</div>
       <div class="car-body">
         <div class="car-year">{car['year']}</div>
         <div class="car-model">{car['model']}</div>

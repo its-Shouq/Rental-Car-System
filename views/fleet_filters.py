@@ -40,8 +40,7 @@ def fleet_filters(show_dates=True):
     with st.container(key="searchbar"):
         if show_dates:
             # four columns: pick-up, return, number of days, search
-            col1, col2, col3, col4, col5, col6 = st.columns([1.5, 1.5, 0.9, 0.2, 3.8, 0.8], vertical_alignment="bottom")
-
+            col1, col2, col3, col4, col5, col6 = st.columns([1.5, 1.5, 0.9, 0.2, 4.6, 0.01], vertical_alignment="bottom")
             pickup = col1.date_input("Pick-up date", min_value=today,
                                     format="DD/MM/YYYY", key="pickup_date")
 
@@ -77,23 +76,25 @@ def fleet_filters(show_dates=True):
                        key="f_color", label_visibility="collapsed")
 
     # The year list is text here ("All", "2020", ...), so we turn it back into a number below
-    year_options = ["All"]
+    year_options = ["All years"]
     for y in cars_obj.get_years():
         year_options.append(str(y))
     year = col2.selectbox("Year", year_options, key="f_year", label_visibility="collapsed")
 
-    order = col3.selectbox("Sort", ["Low to high", "High to low"], key="f_sort",
+    order = col3.selectbox("Sort", ["Low to high price", "High to low price"], key="f_sort",
                            label_visibility="collapsed")
 
     # ---- Build the list with the team's methods
     if color is None or color == "All colors":
         color = "All"
-    if year != "All":
+    if year == "All years":
+        year = "All"            # filter_cars from the team's file understands "All"
+    else:
         year = int(year)
 
     cars = cars_obj.filter_cars(color, year)      # color and year
     cars = cars_obj.search(cars, query)           # search by model name
-    cars = cars_obj.sort_by_price(cars, ascending=(order == "Low to high"))   # sort by price
+    cars = cars_obj.sort_by_price(cars, ascending=(order == "Low to high price"))   # sort by price
 
     # ---- Fill the title now that we know how many cars we have
     if len(cars) == 1:
