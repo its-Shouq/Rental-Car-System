@@ -17,12 +17,19 @@ rented_cars = [] #store rented cars
 #dictionary of taken usernames as a key and password as a value to avoid duplicates in usernames while sign up and check username while login
 accounts = {"sara123": "123"}
 
+admins = {"admin": "admin123"}
+accounts.update(admins)   #add admins to accounts so login() can check them and customers can't take their username
+
 #login method
 def login(username,password):
     if username in accounts and accounts[username] == password :
      return "successfully login"
     else:
      return "your username or password is wrong"
+
+def is_admin(username): #method that checks if the username belongs to an admin
+    return username in admins
+
 
 # calculate the number of rental days from the pick-up and return dates
 def rental_days(pickup, ret):

@@ -303,3 +303,17 @@ def topbar(name=None, role=None):
             c.button("Sign out", key="signout", on_click=sign_out, use_container_width=True)
         else:
             c.button("Back", key="back", on_click=goto, args=("welcome",), use_container_width=True)
+
+def side_title(text, where=st):
+    """Big title on the right side of the page (e.g. 'Log in', 'Sign up')."""
+    where.markdown(f'<div class="side-title">{text}</div>', unsafe_allow_html=True)
+
+
+def side_sub(text, where=st):
+    """Small grey line under the title."""
+    where.markdown(f'<div class="side-sub">{text}</div>', unsafe_allow_html=True)
+
+
+def field_error(message, where=st):
+    """Small red error message under a field."""
+    where.markdown(f'<div class="field-err">{message}</div>', unsafe_allow_html=True)
