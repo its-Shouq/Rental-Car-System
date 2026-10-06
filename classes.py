@@ -23,6 +23,13 @@ def login(username,password):
     else:
      return "your username or password is wrong"
 
+# calculate the number of rental days from the pick-up and return dates
+def rental_days(pickup, ret):
+    days = (ret - pickup).days
+    if days < 1:
+        days = 1
+    return days
+
 #Second part of the code
 #super class
 class Person:
@@ -221,6 +228,15 @@ class Cars:
           return sorted(car_list, key=lambda car: car["price"])
         else:
           return sorted(car_list, key=lambda car: car["price"], reverse=True)
+
+    # method to search the cars by model name
+    def search(self, car_list, query):
+        result = []
+        query = query.strip().lower()
+        for car in car_list:
+            if query in car["model"].lower():
+                result.append(car)
+        return result
 
 
 #streamlit part on another file
