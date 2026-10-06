@@ -185,6 +185,7 @@ EXTRA_CSS = """
 
 /* bold text on buttons */
 .stButton button p { font-weight:600; }
+
 """
 
 
@@ -283,7 +284,7 @@ def brand_panel(headline, sub):
     return f"""
     <div class="brand-panel">
       <div class="inner">
-        <div class="logo">RENTAL</div>
+        <div class="logo">WHEELS</div>
         <h1>{headline}</h1>
         <p>{sub}</p>
       </div>
