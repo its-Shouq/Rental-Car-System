@@ -317,3 +317,36 @@ def side_sub(text, where=st):
 def field_error(message, where=st):
     """Small red error message under a field."""
     where.markdown(f'<div class="field-err">{message}</div>', unsafe_allow_html=True)
+
+def summary_html(car, days, total):
+    return ('<div class="panel">'
+            '<div class="row"><span>Car</span><span>' + car["model"] + '</span></div>'
+            '<div class="row"><span>Daily rate</span><span>SAR ' + money(car["price"]) + '</span></div>'
+            '<div class="row"><span>Days</span><span>' + str(days) + '</span></div>'
+            '<div class="total"><span>Total</span><strong>SAR ' + money(total) + '</strong></div>'
+            '</div>')
+ 
+ 
+# The receipt ticket shown after the rental is confirmed. r is the receipt dictionary from checkout.
+def receipt_html(r):
+    return ('<div class="ticket">'
+            '<h3>Rental confirmed</h3>'
+            '<div class="ref">Reference ' + r["ref"] + ', issued ' + r["issued"].strftime("%d %b %Y, %H:%M") + '</div>'
+            '<div class="row"><span>Renter</span><span>' + r["name"] + '</span></div>'
+            '<div class="row"><span>Car</span><span>' + r["car"] + ' (' + r["color"] + ')</span></div>'
+            '<div class="row"><span>Rental dates</span><span>' + fmt_date(r["pickup"]) + ' to ' + fmt_date(r["ret"]) + '</span></div>'
+            '<div class="row"><span>Rental length</span><span>' + str(r["days"]) + ' days</span></div>'
+            '<div class="row"><span>Daily rate</span><span>SAR ' + money(r["rate"]) + '</span></div>'
+            '<div class="total"><span>Total paid</span><strong>SAR ' + money(r["total"]) + '</strong></div>'
+            '</div>')
+ 
+ 
+# The total price under a car card: big price, and a small text under it ("for 3 days")
+def card_total_html(total, days_text):
+    return ('<div class="cardtotal"><strong>SAR ' + money(total) + '</strong>'
+            '<span>' + days_text + '</span></div>')
+ 
+ 
+# The dashed box shown when there is nothing to show (no cars, no booking yet...)
+def empty_html(title, text):
+    return '<div class="empty"><strong>' + title + '</strong>' + text + '</div>'
