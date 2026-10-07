@@ -18,7 +18,7 @@ from theme import car_card_html, empty_html, flash, money, receipt_html, sign_ou
 from views.fleet_filters import fleet_filters
 
 #The page itself. app.py calls render(user) when the page is "customer_home".
-#user is the logged-in Customer object (from the team's classes file).
+#user is the logged-in Customer object.
 def render(user):
     #Remember which tab is open (the first time it is the fleet tab)
     if "customer_tab" not in st.session_state:
@@ -72,8 +72,8 @@ def navbar(user):
 def fleet_tab(user):
     # The title, search bar and filters come from fleet.py.
     # We get back the list of cars and the chosen dates.
-    cars, rental = fleet_filters(show_dates=True) #show_dates=True -> customer: pick-up / return dates and the number of days
-    catalog = classes.Cars(classes.available_cars)
+    cars, rental = fleet_filters() # return dates and the number of days
+    catalog = classes.Cars(classes.available_cars) #call the Cars class to get the available cars
     # If no cars were found, we show a warning message.
     if len(cars) == 0:
         st.warning("No cars match your filters.")
@@ -116,7 +116,7 @@ def fleet_tab(user):
 
             shown = shown + 1
 
-# The "My booking" tab. Temporary text for now, we build it in the next step.
+#The "My booking" tab.
 def booking_tab(user):
     if len(user.cart) == 1: #if there is a car in the cart, show it
         cart_view(user)
@@ -128,15 +128,15 @@ def booking_tab(user):
                     unsafe_allow_html=True)
  
  
-# Forget the dates saved in the two date boxes of the cart
-# (so the next car starts with its own dates)
+#Forget the dates saved in the two date boxes of the cart
+# so the next car starts with its own dates)
 def forget_cart_dates():
     st.session_state.pop("b_pickup", None)
     st.session_state.pop("b_return", None)
  
  
 def cart_view(user):
-    car = user.cart[0]                          # the car in the cart (the team's cart is a list)
+    car = user.cart[0]                          # the car in the cart
     today = date.today()
  
     #the first time, the date boxes start with the dates saved in the cart

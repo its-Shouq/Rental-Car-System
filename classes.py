@@ -114,7 +114,7 @@ class Admin(Person):
           car['price'] = price
 
 
-#Customer class(add commints)
+#Customer class
 class Customer(Person):
   def __init__(self,name,age,email,username,password, license,cart):
     super().__init__(name,age,email,username,password)
@@ -123,13 +123,13 @@ class Customer(Person):
 
 # method to add a car to the cart, with a limit of one car at a time
   def add_to_cart(self, car, pickup, ret):
-    if len(self.cart) >= 1:
+    if len(self.cart) >= 1: #limit the cart to one car at a time
       return False, "You can only rent one car at a time."
 
-    rental = car.copy()
-    rental["pickup"] = pickup
+    rental = car.copy() #create a copy of the car dictionary
+    rental["pickup"] = pickup #add the pick-up and return dates to the rental dictionary
     rental["ret"] = ret
-    rental["days"] = rental_days(pickup, ret)
+    rental["days"] = rental_days(pickup, ret) #add the number of rental days to the rental dictionary
     self.cart.append(rental)
     return True, "Car added to your booking."
 
@@ -144,20 +144,20 @@ class Customer(Person):
     self.cart[0]["days"] = rental_days(pickup, ret)
     return True, "Rental dates updated."
 
-
+# method to delete the car from the cart
   def delete_from_cart(self):
     self.cart.clear()
     return True, "Car removed from your booking."
 
-
+# method to checkout the car in the cart, creating a receipt and updating the available cars
   def checkout(self):
     if not self.cart:
       return None
- 
+    #get the car in the cart and calculate the total rental price
     car = self.cart[0]
     total = rental_total(car["price"], car["days"])
  
-    # the receipt: the interface shows it, and the admin sees it in rented_cars
+    # the receipt is a dictionary that contains the rental information
     receipt = {"ref": "RN-" + datetime.now().strftime("%y%m%d%H%M%S"),
                "issued": datetime.now(),
                "name": self.name,
@@ -170,7 +170,7 @@ class Customer(Person):
                "days": car["days"],
                "rate": car["price"],
                "total": total}
- 
+    #update the available cars list by reducing the quantity of the rented car
     for available_car in available_cars:
       if available_car["id"] == car["id"]:
         available_car["quantity"] -= 1
@@ -180,7 +180,7 @@ class Customer(Person):
           available_cars.remove(available_car)
  
         break
- 
+    #add the receipt to the rented cars list and clear the cart
     rented_cars.append(receipt)
     self.cart.clear()
     return receipt
