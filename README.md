@@ -8,9 +8,6 @@ available cars, filter cars, manage their booking, and confirm a rental.
 It also provides an admin interface for managing the available cars.
 
 ## Features
-
-### Customer
-
 -   Welcome page with navigation to login and registration
 -   Customer and admin authentication
 -   Browse available rental cars
@@ -28,7 +25,6 @@ It also provides an admin interface for managing the available cars.
 -   Responsive user interface
 
 ## Technologies Used
-
 -   Python
 -   Streamlit
 -   Git & GitHub
@@ -36,5 +32,6 @@ It also provides an admin interface for managing the available cars.
 -   Streamlit Community Cloud
 
 ## Live App
+https://wheels-rental-system.streamlit.app/
 
 https://wheels-rental-system.streamlit.app/
