@@ -167,8 +167,7 @@ EXTRA_CSS = """
 
 /* customer navbar */
 /* customer navbar: full width, from the left edge to the right edge */
-.st-key-navbar { background:var(--asphalt); border-radius:0; padding:.6rem 3rem; margin-bottom:1.2rem;
-                 width:100vw !important; max-width:100vw !important; margin-left:calc(50% - 50vw); }
+.st-key-navbar { background:var(--asphalt); border-radius:12px; padding:.6rem 1.3rem; margin-bottom:1.2rem; margin-top:1.2rem; }
 .st-key-navbar .logo { font-family:'Big Shoulders Display',sans-serif; font-weight:800; font-size:1.9rem; color:var(--signal); }
 .st-key-navbar .topname { color:#fff; text-align:right; font-weight:500; margin-bottom:14px; }
 .st-key-navbar button[kind="tertiary"] { color:#9AA6AE !important; background:transparent !important; border:none !important; }
