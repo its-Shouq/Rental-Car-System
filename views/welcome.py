@@ -31,16 +31,9 @@ with right:
         st.markdown('<div class="side-title">Ready to drive?</div>',unsafe_allow_html=True) # title style from theme class
         st.markdown('<div class="side-sub">Log in to book a car, or create an account in a minute.</div>',unsafe_allow_html=True) #side-sub style from theme class
         if st.button("Log in", type="primary", use_container_width=True):# create a log in button as a primary button 
-          st.switch_page("views/login.py") # to navigate to login page 
+          st.switch_page("views/login.py") # to navigate to login page
         if st.button("Create account", use_container_width=True): # create "create account" button
          st.switch_page("views/auth.py") # to navigate to sign up page
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.write("")
-        st.markdown('<div style="text-align:center;">Are you an admin? <b>Log in here</b></div>',unsafe_allow_html=True) # admin log in , admin will click here to navegate to his page
-    
 
 
 

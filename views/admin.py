@@ -10,7 +10,7 @@ from theme import inject_css, brand_panel , topbar , car_card_html
 
 inject_css()# call the function to apply the theme
 
-adm1 = classes.Admin("Wasan" , 22 , "xxxx@gmail.com" , "wsn41" , "12345")
+adm1 = classes.Admin("Manager" , 22 , "xxxx@gmail.com" , "admin" , "admin123")
 
 st.markdown(
     '<div class="page-title">   Admin Dashboard</div>',

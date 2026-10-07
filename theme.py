@@ -298,7 +298,7 @@ def topbar(name=None, role=None):
     """Dark bar at the top of the pages. Without a name it shows a Back button."""
     with st.container(key="topbar"):
         a, b, c = st.columns([5, 3, 1.3], vertical_alignment="center")
-        a.markdown('<span class="logo">RENTAL</span>', unsafe_allow_html=True)
+        a.markdown('<span class="logo">WHEELS</span>', unsafe_allow_html=True)
         if name:
             pill = '<span class="pill pill-signal">Admin account</span>' if role == "admin" else ""
             b.markdown(f'<div class="topname">{pill}{name}</div>', unsafe_allow_html=True)
