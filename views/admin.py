@@ -10,27 +10,25 @@ from theme import inject_css, brand_panel , topbar , car_card_html
 
 inject_css()# call the function to apply the theme
 
-adm1 = classes.Admin("Manager" , 22 , "xxxx@gmail.com" , "admin" , "admin123")
+adm1 = classes.Admin("Manager" , 22 , "xxxx@gmail.com" , "admin" , "admin123") # initialize admin object
 
+#Admin page title
 st.markdown(
     '<div class="page-title">   Admin Dashboard</div>',
     unsafe_allow_html=True
 )
-
+# Tob bar of Wheels Website
 topbar(adm1.name , "Admin")
 
 
-
-
-#st.markdown(brand_panel("Manage, add and edit your cars" , "" ),unsafe_allow_html = True) 
-
-
-
+#initialize the main two tabs (Modify cars and add a new car tabs)
 b1 , b2  = st.tabs(["Modify cars" ,  "Add a new car"])
-
+# modify cars tab
 with b1:
     for car in classes.available_cars: 
+        # Three columns: 1- for cars display 2- Edit button 3- Delete button
         col1 , col2 , col3 =st.columns([5 ,1 ,1], gap="xsmall" , vertical_alignment="center" )
+        #print or display all cars in system
         with col1:
             st.markdown(f"""
         <div class="fleet-row">
@@ -42,45 +40,56 @@ with b1:
         <span><b>Quantity</b> <strong>{car['quantity']} |</strong></span>
         </div>
         """, unsafe_allow_html=True)
-            #st.write(f"id:{car['id']}   Model:{car['model']}    Year:{car['year']}  Color:{car['color']}    Price:{car['price']}    Quantity:{car['quantity']}")
+        #st.write(f"id:{car['id']}   Model:{car['model']}    Year:{car['year']}  Color:{car['color']}    Price:{car['price']}    Quantity:{car['quantity']}")
+
+        #Edit button which enable the admin to modify price or quantity of any car in the system
         with col2:
             edit_button = st.button("Edit" , key =f"Edit_{car['id']}" , type = "primary" , use_container_width=True)
             if edit_button:
-                st.session_state.editing_car = car['id']
+                st.session_state.editing_car = car['id'] # if press edit button start editing session
+        #Delete button to delete the corresponding car from the system         
         with col3: 
             delete_button = st.button("Delete" , key=f"Delete_{car['id']}")
             if delete_button: 
-                adm1.delete(car['id'])
-                st.rerun()
+                adm1.delete(car['id']) # if press delete button delete the car from the list using admin delete method
+                st.rerun() #After deletion restart the session to view new changes
+
+        #if editing car session start, two columns will appear: 1- modify price 2- modify quantity
         if st.session_state.get("editing_car") ==car['id']:
             c1 , c2 = st.columns([1,1] , gap="xxsmall")
+            #modify the price of the corresponding car
             with c1:
                 st.markdown('<div class="fleet-label"><b>New price:</b></div>', unsafe_allow_html=True)
                 new_price = st.number_input("New price: " , value = car['price'], label_visibility="collapsed")
+            #modify the quantity of the corresponding car
             with c2:
                 st.markdown('<div class="fleet-label"><b>New quantity:</b></div>', unsafe_allow_html=True)
                 new_quantity = st.number_input("New quantity" , value = car['quantity'], label_visibility="collapsed")
-
+            # initialize four columns mainly use 2 columns for save and cance buttons
             left, con1 , con2 , right = st.columns([2 , 0.5, 0.5 ,2] , gap="xxsmall" )
             with con1:
-                
+                #Save button to save changes of the corresponding car
                 if st.button("Save" , key= f"save_{car['id']}" , type = "primary", use_container_width=True ):
-                    
-                    adm1.modify_price(car["id"] , new_price)
+                    #modified using admin methods
+                    adm1.modify_price(car["id"] , new_price) 
                     adm1.modify_quantity(car["id"] , new_quantity)
                     st.success("Done!!")
 
-                    st.session_state.editing_car = None
+                    st.session_state.editing_car = None #stop the editing car session once saving changes
 
-                    st.rerun()
+                    st.rerun() # restart the session
+                    
             with con2:
-                
+                # cancel button to discard changes
                 if st.button("Cancel" , key = f"cancel_{car['id']}" , use_container_width=True):
-                    st.session_state.editing_car = None
-                    st.rerun()
+                    st.session_state.editing_car = None # stop the editing car session when discard changes
+                    st.rerun() #restart the session
 
+#Second tab to add a new car to the system
 with b2:
+    #form to fill the required information of the new car
     with st.form("Add a car"):
+        #seperate the required information into two columns 
         column1 , column2 = st.columns(2)
         
         with column1:
@@ -102,11 +111,12 @@ with b2:
             st.markdown('<div class="fleet-label"><b>Quantity: </b></div>', unsafe_allow_html=True)
             quantity = st.number_input("The quantity ready to be rented: "  , value = None , label_visibility="collapsed")
 
-        
+        # submit button to submit and send the form 
         submitted = st.form_submit_button("Submit" , key ="Submit" , type = "secondary" , use_container_width=True )
 
 
         if submitted: 
+            #check if all required information are filled
             if not id1:
                 st.error("ID required!")
             elif not model: 
@@ -120,10 +130,11 @@ with b2:
             elif not quantity:
                 st.error("Quantity required!")
             else:
-
+                #check if car already in the system
                 if int(id1) in [car['id'] for car in classes.available_cars]:
                     st.error("This car is already added to the list ...")
                 else: 
-                    adm1.add(int(id1) , model , year , price  , color , int(quantity))
+                    #if not in the system it will be added to the system
+                    adm1.add(int(id1) , model , year , price  , color , int(quantity)) #added using admin method
                     st.success("The car has been saved successfuly!")
-                    st.rerun()
+                    st.rerun() #restart the session
