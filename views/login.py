@@ -1,6 +1,6 @@
 import streamlit as st
 from classes import *
-from themes import inject_css, brand_panel, topbar, side_title, side_sub
+from theme import flash, inject_css, brand_panel, topbar, side_title, side_sub
 
 st.set_page_config(page_title="Rental - Log in", layout="wide")  # must be the first st command
 inject_css()                                                     # each page loads the CSS itself
@@ -34,7 +34,8 @@ def login_page():                                    # named login_page so it do
                     st.session_state.username = username          # remember who is logged in
                     st.session_state.role = "customer"
                     st.session_state.customer = Customer(username, 21, "", username, password, True, [])
-                    st.success(f"Welcome back, {username}!")
+                    flash("Welcome back, " + username + "!")    # small popup on the next page
+                    st.rerun()                                    # app.py now opens the customer page
                     
                 else:
                     st.error(result)                              # "your username or password is wrong"
@@ -60,7 +61,8 @@ def login_page():                                    # named login_page so it do
                     st.session_state.username = username
                     st.session_state.role = "admin"
                     st.session_state.admin = Admin(username, 30, "", username, password)
-                    st.success(f"Welcome, {username} (admin)")
+                    flash("Welcome, " + username + " (admin)")
+                    st.rerun()                                    # app.py now opens the admin page
                     
                 else:
                     st.error(result)

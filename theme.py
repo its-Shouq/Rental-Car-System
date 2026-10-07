@@ -220,9 +220,12 @@ def goto(page, **state):
 
 
 def sign_out():
-    st.session_state.username = None
-    st.session_state.receipt = None
-    st.session_state.page = "welcome"
+    """Forget the logged-in user. app.py then shows the welcome page again."""
+    keys = ["username", "role", "customer", "admin", "receipt",
+            "customer_tab", "b_pickup", "b_return"]
+    for key in keys:
+        if key in st.session_state:
+            del st.session_state[key]
 
 
 # ----------------------------------------------------------------------
@@ -302,7 +305,8 @@ def topbar(name=None, role=None):
             b.markdown(f'<div class="topname">{pill}{name}</div>', unsafe_allow_html=True)
             c.button("Sign out", key="signout", on_click=sign_out, use_container_width=True)
         else:
-            c.button("Back", key="back", on_click=goto, args=("welcome",), use_container_width=True)
+            if c.button("Back", key="back", use_container_width=True):
+                st.switch_page("views/welcome.py")
 
 def side_title(text, where=st):
     """Big title on the right side of the page (e.g. 'Log in', 'Sign up')."""

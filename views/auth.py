@@ -1,6 +1,6 @@
 import streamlit as st
 from classes import *
-from themes import inject_css, brand_panel, topbar, side_title, side_sub, field_error
+from theme import flash, inject_css, brand_panel, topbar, side_title, side_sub, field_error
 
 st.set_page_config(page_title="Rental - Sign up", layout="wide")  # must be the first st command
 inject_css()                                                      # each page loads the CSS itself
@@ -72,7 +72,8 @@ def signup_page():
                 st.session_state.username = customer.username
                 st.session_state.role = "customer"
                 st.session_state.customer = customer
-                right.success(f"Welcome, {customer.name}! Your account is ready. You can log in now.")
+                flash("Welcome, " + customer.name + "! Your account is ready.")
+                st.rerun()                                     # app.py now opens the customer page
                
             else:
                 right.error(result)
