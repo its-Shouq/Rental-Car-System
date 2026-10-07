@@ -34,4 +34,3 @@ It also provides an admin interface for managing the available cars.
 ## Live App
 https://wheels-rental-system.streamlit.app/
 
-https://wheels-rental-system.streamlit.app/
